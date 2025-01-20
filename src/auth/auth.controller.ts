@@ -1,13 +1,13 @@
 import { Controller, Post, Body, Param } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from '../user/user.service'; // Certifique-se de importar o UserService
-import { User } from '../user/user.entity'; // Importe a entidade User
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.entity';
 
 @Controller('auth')
 export class AuthController {
     constructor(
         private readonly authService: AuthService,
-        private readonly userService: UserService, // Injete o UserService
+        private readonly userService: UserService,
     ) { }
 
     @Post('login')

@@ -28,5 +28,5 @@ export class User {
     updated_at: Date;
 
     @OneToMany(() => Declaration, (declaration) => declaration.user)
-    declarations: Declaration[]; // Relacionamento com declarações
+    declarations: Declaration[];
 }
