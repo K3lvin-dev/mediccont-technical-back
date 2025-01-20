@@ -1,10 +1,34 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './user/user.entity';
+import { Declaration } from './declaration/declaration.entity';
+import { UserModule } from './user/user.module';
+import { DeclarationModule } from './declaration/declaration.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Torna as configurações disponíveis globalmente
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_PORT'),
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
+        entities: [User, Declaration],
+        synchronize: true, // Não usar em produção
+      }),
+      inject: [ConfigService],
+    }),
+    UserModule,
+    DeclarationModule,
+    HealthModule,
+  ],
 })
-export class AppModule {}
+export class AppModule { }
