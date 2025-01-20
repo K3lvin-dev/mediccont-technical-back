@@ -9,6 +9,12 @@ export class User {
     @Column({ length: 100 })
     name: string;
 
+    @Column({ nullable: true }) // Segredo do 2FA (se habilitado)
+    twoFactorSecret: string;
+
+    @Column({ default: false }) // Flag indicando se o 2FA está ativo
+    isTwoFactorEnabled: boolean;
+
     @Column({ length: 100, unique: true })
     email: string;
 

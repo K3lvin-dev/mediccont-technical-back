@@ -6,11 +6,12 @@ import { Declaration } from './declaration/declaration.entity';
 import { UserModule } from './user/user.module';
 import { DeclarationModule } from './declaration/declaration.module';
 import { HealthModule } from './health/health.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Torna as configurações disponíveis globalmente
+      isGlobal: true, // Torna as variáveis de ambiente acessíveis globalmente
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,6 +30,7 @@ import { HealthModule } from './health/health.module';
     UserModule,
     DeclarationModule,
     HealthModule,
+    AuthModule,
   ],
 })
 export class AppModule { }
