@@ -63,7 +63,7 @@ export class DeclarationService {
 
     // Excluir uma declaração
     async remove(id: number): Promise<void> {
-        const declaration = await this.findOne(id); // Garantir que a declaração exista
-        await this.declarationRepository.remove(declaration); // Remover a declaração
+        const declaration = await this.findOne(id);
+        await this.declarationRepository.remove(declaration);
     }
 }
