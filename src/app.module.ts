@@ -6,11 +6,12 @@ import { Declaration } from './declaration/declaration.entity';
 import { UserModule } from './user/user.module';
 import { DeclarationModule } from './declaration/declaration.module';
 import { HealthModule } from './health/health.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Torna as configurações disponíveis globalmente
+      isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -22,13 +23,14 @@ import { HealthModule } from './health/health.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         entities: [User, Declaration],
-        synchronize: true, // Não usar em produção
+        synchronize: true, // Não usar em produção, pode mudar o schema sem querer
       }),
       inject: [ConfigService],
     }),
     UserModule,
     DeclarationModule,
     HealthModule,
+    AuthModule,
   ],
 })
 export class AppModule { }
