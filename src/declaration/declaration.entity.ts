@@ -1,51 +1,45 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from '../user/user.entity';
-import { ManyToOne } from 'typeorm';
 
 @Entity('declarations')
 export class Declaration {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => User, (user) => user.declarations, { onDelete: 'CASCADE' })
-    user: User;
+    @ManyToOne(() => User, user => user.declarations)
+    @JoinColumn({ name: 'user_id' })
+    user: number;
 
-    @Column({ type: 'int' })
+    @Column()
     year: number;
 
-    @Column({ type: 'varchar', length: 14 })
-    cpfCnpj: string;
+    @Column()
+    cpf_cnpj: string;
 
-    @Column({ type: 'numeric', precision: 15, scale: 2 })
+    @Column('numeric', { precision: 15, scale: 2 })
     income: number;
 
-    @Column({ type: 'numeric', precision: 15, scale: 2, nullable: true })
-    expenses?: number;
+    @Column('numeric', { precision: 15, scale: 2, nullable: true })
+    expenses: number;
 
-    @Column({ type: 'numeric', precision: 15, scale: 2, nullable: true })
-    taxableIncome?: number;
+    @Column('numeric', { precision: 15, scale: 2, nullable: true })
+    taxable_income: number;
 
-    @Column({ type: 'numeric', precision: 15, scale: 2, nullable: true })
-    taxPaid?: number;
+    @Column('numeric', { precision: 15, scale: 2, nullable: true })
+    tax_paid: number;
 
-    @Column({ type: 'varchar', length: 20, default: 'não submetida' })
+    @Column({ default: 'não submetida' })
     status: string;
 
-    @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    createdAt: Date;
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created_at: Date;
 
-    @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    updatedAt: Date;
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    updated_at: Date;
 
     @Column({ type: 'timestamp', nullable: true })
-    submittedAt?: Date;
+    submitted_at: Date;
 
     @Column({ type: 'text', nullable: true })
-    notes?: string;
+    notes: string;
 }

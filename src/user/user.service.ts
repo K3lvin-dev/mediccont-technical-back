@@ -16,6 +16,13 @@ export class UserService {
         return this.userRepository.findOne({ where: { email } });
     }
 
+    // Buscar um usuário por ID
+    async findById(id: number): Promise<User> {
+        return this.userRepository.findOne({
+            where: { id },
+        });
+    }
+
     async enableTwoFactorAuthentication(userId: number, secret: string): Promise<User> {
         const user = await this.userRepository.findOne({
             where: { id: userId },
